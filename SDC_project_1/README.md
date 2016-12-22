@@ -45,7 +45,7 @@
 
 <img src="check_1.png" width="360" alt="Combined Image" />    <img src="result3_check.png" width="360" alt="Combined Image" />
 
-Unexpected lines are detected because of shadow. Some of lines will be filtered with slope threshold but the others will be not filtered.
+Unexpected lines are detected because of shadow. Some of lines will be filtered with slope filtering but the others will be not filtered.
 If I adjust parameters of canny or hough transform, I might erase outliers in the image.
 But the adjusted parameter is not a perfect parameter in all frames.
 So I have tried RANSAC and this is the result.
