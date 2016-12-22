@@ -23,14 +23,14 @@
 
 1. Interpolation
   * Need more sample points for RANSAC's good result 
-    We know each line's startpoint & endpoint. We could get more points between them.
+  - We know each line's startpoint & endpoint. We could get more points between them.
 2. Get random samples
   * Extract 2 random points in sample
-    Get line equation between them
+  - Get line equation between them
 3. Compute cost
   * Compute distance between sample points and the line.
-    cost = sum of distance
-*  Iterate 2, 3 and remember the min_cost line
+  - cost = sum of distance
+  + **Iterate 2, 3 and remember the min_cost line**
 4. Erase outliers
   * Compute distance between sample points and the min_cost line.
     If distance > threshold : outliers (Erase it)
@@ -38,7 +38,7 @@
 ##**Step 3:** Draw line in image
 
 *  Extrapolation using `fitline()` function after erasing outliers
-*  frame-to-frame smoothing (I got this idea from other SDC members. Thanks!) 
+-  frame-to-frame smoothing (I got this idea from other SDC members. Thanks!) 
 
 
 ##**Result of RANSAC**
