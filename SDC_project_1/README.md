@@ -1,72 +1,57 @@
 #**Finding Lane Lines on the Road** 
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-<img src="laneLines_thirdPass.jpg" width="480" alt="Combined Image" />
+<img src="result_solidYellowCurve.jpg" width="480" alt="Combined Image" />
 
-When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
+####My first project of the Udacity's 'Self Driving Car Nanodegree' was `Finding lain lines`.
+####In this project, I mainly considered **'How to erase outliers'**.
 
-In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
+####Here is my pipeline
 
-**Step 1:** Getting setup with Python
+##**Step 1:** Find lines in image
 
-To do this project, you will need Python 3 along with the numpy, matplotlib, and OpenCV libraries, as well as Jupyter Notebook installed. 
+1. Set ROI(Region Of Interest)
+  * To reduce computing cost
+2. Apply gaussian filter
+3. Apply Canny edge transform
+4. Perform hough transform 
+  * Get first candidates for real lane lines
+ 
+##**Step 2:** Find inliers & outliers
 
-We recommend downloading and installing the Anaconda Python 3 distribution from Continuum Analytics because it comes prepackaged with many of the Python dependencies you will need for this and future projects, makes it easy to install OpenCV, and includes Jupyter Notebook.  Beyond that, it is one of the most common Python distributions used in data analytics and machine learning, so a great choice if you're getting started in the field.
+> ###**I used RANSAC algorithm to eliminate outliers.**
+> `*RANSAC : Random Sample Consensus`
 
-Choose the appropriate Python 3 Anaconda install package for your operating system <A HREF="https://www.continuum.io/downloads" target="_blank">here</A>.   Download and install the package.
+1. Interpolation
+  * Need more sample points for RANSAC's good result 
+  * We know each line's startpoint & endpoint. We could get more points between them.
+2. Get random samples
+  * Extract 2 random points in sample
+  * Get line equation between them
+3. Compute cost
+  * Compute distance between sample points and the line.
+  * cost = sum of distance
+*  Iterate 2, 3 and remember the min_cost line
+4. Erase outliers
+  * Compute distance between sample points and the min_cost line.
+  * If distance > threshold : outliers (Erase it)
 
-If you already have Anaconda for Python 2 installed, you can create a separate environment for Python 3 and all the appropriate dependencies with the following command:
+##**Step 3:** Draw line in image
 
-`>  conda create --name=yourNewEnvironment python=3 anaconda`
+*  Extrapolation using `fitline()` function after erasing outliers
+*  frame-to-frame smoothing (I got this idea from other SDC members. Thanks!) 
 
-`>  source activate yourNewEnvironment`
 
-**Step 2:** Installing OpenCV
+##**Result of RANSAC **
 
-Once you have Anaconda installed, first double check you are in your Python 3 environment:
+<img src="check_1.png" width="360" alt="Combined Image" />
 
-`>python`    
-`Python 3.5.2 |Anaconda 4.1.1 (x86_64)| (default, Jul  2 2016, 17:52:12)`  
-`[GCC 4.2.1 Compatible Apple LLVM 4.2 (clang-425.0.28)] on darwin`  
-`Type "help", "copyright", "credits" or "license" for more information.`  
-`>>>`   
-(Ctrl-d to exit Python)
+Unexpected lines are detected because of shadow.
+If I adjust parameters of canny or hough transform, I might erase outliers in the image.
+But the adjusted parameter is not a perfect parameter in all frames.
+So I have tried RANSAC and this is the result.
 
-run the following commands at the terminal prompt to get OpenCV:
+<img src="ransac_result.png" width="640" alt="Combined Image" />
 
-`> pip install pillow`  
-`> conda install -c menpo opencv3=3.1.0`
+##**Result on Video **
 
-then to test if OpenCV is installed correctly:
-
-`> python`  
-`>>> import cv2`  
-`>>>`  (i.e. did not get an ImportError)
-
-(Ctrl-d to exit Python)
-
-**Step 3:** Installing moviepy  
-
-We recommend the "moviepy" package for processing video in this project (though you're welcome to use other packages if you prefer).  
-
-To install moviepy run:
-
-`>pip install moviepy`  
-
-and check that the install worked:
-
-`>python`  
-`>>>import moviepy`  
-`>>>`  (i.e. did not get an ImportError)
-
-(Ctrl-d to exit Python)
-
-**Step 4:** Opening the code in a Jupyter Notebook
-
-You will complete this project in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
-
-Jupyter is an ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, run the following command at the terminal prompt (be sure you're in your Python 3 environment!):
-
-`> jupyter notebook`
-
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
+[![Video White](https://github.com/windowsub0406/SelfDrivingCarND/edit/master/SDC_project_1/result_white.mp4?raw=true)](https://youtu.be/Un9S84z3U4w)
