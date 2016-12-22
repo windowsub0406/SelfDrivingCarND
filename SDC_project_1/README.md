@@ -25,7 +25,7 @@
  *  Need more sample points for RANSAC's good result 
  - We know each line's startpoint & endpoint. We could get more points between them.
 2. Get random samples
- * Extract 2 random points in sample
+ * Extract 2 random points in samples
  - Get line equation between them
 3. Compute cost
  * Compute distance between sample points and the line.
