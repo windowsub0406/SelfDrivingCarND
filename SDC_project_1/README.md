@@ -22,11 +22,11 @@
 > *`RANSAC : Random Sample Consensus`*
 
 1. Interpolation
-  * Need more sample points for RANSAC's good result 
+  - Need more sample points for RANSAC's good result 
   - We know each line's startpoint & endpoint. We could get more points between them.
 2. Get random samples
-  * Extract 2 random points in sample
-  - Get line equation between them
+  - Extract 2 random points in sample
+  + Get line equation between them
 3. Compute cost
   * Compute distance between sample points and the line.
   - cost = sum of distance
