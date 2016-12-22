@@ -54,4 +54,4 @@ So I have tried RANSAC and this is the result.
 
 ##**Result on Video **
 
-[![Video White](https://github.com/windowsub0406/SelfDrivingCarND/edit/master/SDC_project_1/result_white.gif?raw=true)](https://youtu.be/Un9S84z3U4w)
+[![Video White](https://github.com/windowsub0406/SelfDrivingCarND/master/SDC_project_1/result_white.gif?raw=true)](https://youtu.be/Un9S84z3U4w)
