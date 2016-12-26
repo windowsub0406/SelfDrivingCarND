@@ -260,7 +260,7 @@ def detect_lanes_img(img):
 
     # Perform hough transform
     # Get first candidates for real lane lines  
-    line_arr = hough_lines(canny_img, 2, 1 * np.pi/180, 30, 10, 20)
+    line_arr = hough_lines(canny_img, 1, 1 * np.pi/180, 30, 10, 20)
     
     #draw_lines(img, line_arr, thickness=2)
 
