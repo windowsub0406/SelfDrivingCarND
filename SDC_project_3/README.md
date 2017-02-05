@@ -208,6 +208,21 @@ visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
 I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
 Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also shows slmilar result with me. After figuring out the reason, I'll rewrite this part.  
 
+
+## Driving
+
+```python
+boost = 1 - speed / max_speed +0.3
+throttle = boost if (boost < 1) else 1
+
+if abs(steering_angle) > 0.3:
+    throttle *=0.2
+```
+
+
+`I changed throttle value based on speed and angle. If current speed is low, I would raise throttle value.  
+
+
 ## Result Video
 
 
