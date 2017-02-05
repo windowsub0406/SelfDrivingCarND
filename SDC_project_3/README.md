@@ -1,6 +1,9 @@
 # End to End Learning for Self-Driving Car
 
-![alt text](images/driving_image.png "driving_image")
+<p align="center">
+    <img src="images/driving_image.png" width="480" alt="driving_image" />
+</p>
+
 
 ## Introduction
 
@@ -53,7 +56,9 @@ To test self-driving(autonomous mode), type `python drive.py model.json` on term
 
 ## Data Collection
 
-![alt text](images/simulator.png "simulator")
+<p align="center">
+    <img src="images/simulator.png" width="480" alt="simulator" />
+</p>
 
 In the simulator, we have two modes and two racing tracks.  
 
@@ -61,16 +66,19 @@ In the simulator, we have two modes and two racing tracks.
 
 **`AUTOMOMOUS MODE`** : Test my trained car.  
 
+
 **Data collection should only be performed in Track1.**  
 We'll check our network model operates well in an untrained track.(Track2)  
 
 In an autonomous mode, The trained car'll drive by mimicing our control. That means that if we want high-quality results, we need cautious vehicle-control. So we could use joystick instead of keyboard to get soft angle change.  
 In udacity course, they said **"garbage in, garbage out."**  
 
+
 Also when we record driving, we need data about 'steer back to the middle from the side of the road'. If all of our data is collected with driving in the middle of the road, our car couldn't recover to the middle from the side. But it's really hard to collect many recovery data because our dataset must not have 'weaving out to the side' data. That will exacerbate the accuracy.  
 So, that's why we have 3 cameras. We could map recovery paths from each camera. If middle camera image is pointing 'left turn', we could get 'soft left turn' with left camera and 'sharp left turn' with right camera.   
 
 I used [udacity dataset](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip) because I didn't have a joystick. I also have my dataset using keyboard but using udacity dataset is easy to compare the result with other students' result.  
+
 
 ![alt text](images/data_distribution.png "data_distribution")
 
@@ -97,7 +105,9 @@ For the data augmentation, I added `Left, Right images` and used `flipping`, `sh
 ***
 > **Including Left, Right images**
 
-![alt text](images/LRC_images.png "LRC_images")
+<p align="center">
+    <img src="images/LRC_images.png" alt="LRC_images" />
+</p>
  
 As mentioned earlier, we could collect many soft or hard steering angle images by including left, right camera images. It would be easy to understand after reading [NVIDIA paper](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) because they also used 3 cameras. The most important thing when we add Left,Right images is a `offset angle`. We should reward proper angle of the offset. In fact, to calculate the exact offset, we need some information.(e.g. camera height, distance between cameras, etc.) But we didn't have any information about setting environment.(I had tried to get proper offset value with geometric methods based on some assumption but it didn't mean much.)  
 
@@ -106,7 +116,9 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
 ***
 > **Flipping, Shifting, Changing brightness, generating shadow**
 
-![alt text](images/transformed_images.png "transformed_images")
+<p align="center">
+    <img src="images/transformed_images.png" width="640" alt="transformed_images" />
+</p>
 
 * __flipping image__
   - Just by flipping, we could augment data and balance left, right angles.
@@ -135,7 +147,9 @@ In image, a bonnet and background are not necessary to decide a exact steering a
 
 ### Resizing
 
-![alt text](images/64x64.png "64x64")
+<p align="center">
+    <img src="images/64x64.png" width="640" alt="64x64" />
+</p>
 
 After data augmentation & crop, I resized image to 64x64. I tried 200x66 and 64x32 size but 64x64 size was best in my model.
 
@@ -187,7 +201,9 @@ img = np.expand_dims(img, axis=0)
 visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
 ```
 
-![alt text](images/visualization.png "visualization")
+<p align="center">
+    <img src="images/visualization.png" width="640" alt="visualization" />
+</p>
 
 I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
 Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also shows slmilar result with me. After figuring out the reason, I'll rewrite this part.  
