@@ -201,12 +201,12 @@ Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also
 Really impressive project. I have looked forward to start this project since I check the curriculum of Udacity's SDC ND. I'm particularly grateful to Udacity for giving me the great opportunity with amazing students.
 From collecting data to design a network architecture, every parts were important. During completing this project, I could got used to Keras and python generator. Above all, I extremely realized the importance of data quality. If I have a chance, I want to test it with real vehicle.
 
-[picture1]: /images/driving_image.png "driving_image"
-[picture2]: /images/simulator.png "simulator"
-[picture3]: /images/data_distribution.png "data_distribution"
-[picture4]: /images/data_balance.png "data_balance"
-[picture5]: /images/LRC_images.png "LRC_images"
-[picture6]: /images/transformed_images.png "transformed_images"
-[picture7]: /images/crop_image.png "crop_image"
-[picture8]: /images/64x64.png "64x64"
-[picture9]: /images/visualization.png "visualization"
+[picture1]: SelfDrivingCarND/SDC_project_3/images/driving_image.png "driving_image"
+[picture2]: SelfDrivingCarND/SDC_project_3/images/simulator.png "simulator"
+[picture3]: SelfDrivingCarND/SDC_project_3/images/data_distribution.png "data_distribution"
+[picture4]: SelfDrivingCarND/SDC_project_3/images/data_balance.png "data_balance"
+[picture5]: SelfDrivingCarND/SDC_project_3/images/LRC_images.png "LRC_images"
+[picture6]: SelfDrivingCarND/SDC_project_3/images/transformed_images.png "transformed_images"
+[picture7]: SelfDrivingCarND/SDC_project_3/images/crop_image.png "crop_image"
+[picture8]: SelfDrivingCarND/SDC_project_3/images/64x64.png "64x64"
+[picture9]: SelfDrivingCarND/SDC_project_3/images/visualization.png "visualization"
