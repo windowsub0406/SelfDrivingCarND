@@ -106,7 +106,7 @@ For the data augmentation, I added `Left, Right images` and used `flipping`, `sh
 > **Including Left, Right images**
 
 <p align="center">
-    <img src="images/LRC_images.png" alt="LRC_images" />
+    <img src="images/LCR_images.png" alt="LRC_images" />
 </p>
  
 As mentioned earlier, we could collect many soft or hard steering angle images by including left, right camera images. It would be easy to understand after reading [NVIDIA paper](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) because they also used 3 cameras. The most important thing when we add Left,Right images is a `offset angle`. We should reward proper angle of the offset. In fact, to calculate the exact offset, we need some information.(e.g. camera height, distance between cameras, etc.) But we didn't have any information about setting environment.(I had tried to get proper offset value with geometric methods based on some assumption but it didn't mean much.)  
@@ -117,7 +117,7 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
 > **Flipping, Shifting, Changing brightness, generating shadow**
 
 <p align="center">
-    <img src="images/transformed_images.png" width="640" alt="transformed_images" />
+    <img src="images/transformed_image.png" width="640" alt="transformed_images" />
 </p>
 
 * __flipping image__
