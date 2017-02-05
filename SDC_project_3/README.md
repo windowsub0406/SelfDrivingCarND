@@ -1,6 +1,6 @@
 # End to End Learning for Self-Driving Car
 
-![alt text][picture1] 
+![alt text](images/driving_image.png "driving_image")
 
 ## Introduction
 
@@ -53,7 +53,7 @@ To test self-driving(autonomous mode), type `python drive.py model.json` on term
 
 ## Data Collection
 
-![alt text][picture2] 
+![alt text](images/simulator.png "simulator")
 
 In the simulator, we have two modes and two racing tracks.  
 
@@ -72,11 +72,11 @@ So, that's why we have 3 cameras. We could map recovery paths from each camera. 
 
 I used [udacity dataset](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip) because I didn't have a joystick. I also have my dataset using keyboard but using udacity dataset is easy to compare the result with other students' result.  
 
-![alt text][picture3]
+![alt text](images/data_distribution.png "data_distribution")
 
 If you finished track1 in training mode, maybe you might feel that there are lots of straight lines in the tracks. Yes, right. And it may cause bad results. In fact, track1 is also biased toward the left turn but not in udacity dataset. So, I needed to balance the data by reducing straight line angles.
 
-![alt text][picture4]
+![alt text](images/data_balance.png "data_balance")
 
 I adjusted zero angle data just by randomly reading only about 10% of them.  
 
@@ -97,7 +97,7 @@ For the data augmentation, I added `Left, Right images` and used `flipping`, `sh
 ***
 > **Including Left, Right images**
 
-![alt text][picture5]
+![alt text](images/LRC_images.png "LRC_images")
  
 As mentioned earlier, we could collect many soft or hard steering angle images by including left, right camera images. It would be easy to understand after reading [NVIDIA paper](http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) because they also used 3 cameras. The most important thing when we add Left,Right images is a `offset angle`. We should reward proper angle of the offset. In fact, to calculate the exact offset, we need some information.(e.g. camera height, distance between cameras, etc.) But we didn't have any information about setting environment.(I had tried to get proper offset value with geometric methods based on some assumption but it didn't mean much.)  
 
@@ -106,7 +106,7 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
 ***
 > **Flipping, Shifting, Changing brightness, generating shadow**
 
-![alt text][picture6]
+![alt text](images/transformed_images.png "transformed_images")
 
 * __flipping image__
   - Just by flipping, we could augment data and balance left, right angles.
@@ -129,13 +129,13 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
 
 ### Crop Image
 
-![alt text][picture7]
+![alt text](images/crop_image.png "crop_image")
 
 In image, a bonnet and background are not necessary to decide a exact steering angle. Therefore, I cropped the inconsequential parts.
 
 ### Resizing
 
-![alt text][picture8]
+![alt text](images/64x64.png "64x64")
 
 After data augmentation & crop, I resized image to 64x64. I tried 200x66 and 64x32 size but 64x64 size was best in my model.
 
@@ -187,7 +187,7 @@ img = np.expand_dims(img, axis=0)
 visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
 ```
 
-![alt text][picture9]
+![alt text](images/visualization.png "visualization")
 
 I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
 Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also shows slmilar result with me. After figuring out the reason, I'll rewrite this part.  
@@ -200,13 +200,3 @@ Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also
 
 Really impressive project. I have looked forward to start this project since I check the curriculum of Udacity's SDC ND. I'm particularly grateful to Udacity for giving me the great opportunity with amazing students.
 From collecting data to design a network architecture, every parts were important. During completing this project, I could got used to Keras and python generator. Above all, I extremely realized the importance of data quality. If I have a chance, I want to test it with real vehicle.
-
-[picture1]: SelfDrivingCarND/SDC_project_3/images/driving_image.png "driving_image"
-[picture2]: SelfDrivingCarND/SDC_project_3/images/simulator.png "simulator"
-[picture3]: SelfDrivingCarND/SDC_project_3/images/data_distribution.png "data_distribution"
-[picture4]: SelfDrivingCarND/SDC_project_3/images/data_balance.png "data_balance"
-[picture5]: SelfDrivingCarND/SDC_project_3/images/LRC_images.png "LRC_images"
-[picture6]: SelfDrivingCarND/SDC_project_3/images/transformed_images.png "transformed_images"
-[picture7]: SelfDrivingCarND/SDC_project_3/images/crop_image.png "crop_image"
-[picture8]: SelfDrivingCarND/SDC_project_3/images/64x64.png "64x64"
-[picture9]: SelfDrivingCarND/SDC_project_3/images/visualization.png "visualization"
