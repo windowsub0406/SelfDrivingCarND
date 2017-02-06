@@ -1,11 +1,11 @@
 # End to End Learning for Self-Driving Car
- 
- 
+  
+  
 <p align="center">
-    <img src="images/driving_img.png" width="480" alt="driving_image" />
+    <img src="images/driving_img.png" width="480" alt="driving_image" /><br>
     <b>result image(watch the full video below)</b><br>
 </p>
- 
+  
  
 ## Introduction
  
@@ -147,13 +147,18 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
   
   
 ### Crop Image
- 
-![alt text](images/crop_image.png "crop_image")
- 
+  
+  
+<p align="center">
+    <img src="images/crop_image.png" width="640" alt="crop_image" />
+</p>
+  
+  
 In image, a bonnet and background are not necessary to decide a exact steering angle. Therefore, I cropped the inconsequential parts.
  
 ### Resizing
- 
+  
+  
 <p align="center">
     <img src="images/64x64.png" width="640" alt="64x64" />
 </p>
