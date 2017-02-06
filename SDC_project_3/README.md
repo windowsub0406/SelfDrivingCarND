@@ -198,8 +198,8 @@ First, I added labda layer to normalize images [0:255] to [-1:1]. This method is
 And added 4 Convolutional layers. The filter size is almost 3x3 and 1 2x2. I guess that the larger filter size will damage the important information of the image. There is 5x5 filter in NVIDIA model but their image size is 200x66 not 64x64. I used `relu` as a activation function, glorot_uniform for weight initialization and used maxpooling and 3 fully connected layers. It wasn't deep neural network but enough to train powerfully.
 As I designed the model in prior [traffic-sign project](https://github.com/windowsub0406/SelfDrivingCarND/blob/master/SDC_project_2/Traffic_Sign_Classifier.ipynb), I had tried he's initialization and batch_normalization for preventing the overfitting and 'vanishing gradient'. I couldn't find the correct reason but it turned out to be rather unsatisfactory. So I added a droupout and it worked well.
  
-I used an `Adam optimizer` for training and `learning rate = 0.0001`, `batch size : 256` `10 epoch`.  
-I also separated 10% of validation dataset after shuffling data. In fact, the validation accuracy didn't mean much in this model. Because of the continuous output.
+I used an `Adam optimizer` for training and `learning rate = 0.0001`, `batch size : 256`, `10 epoch`.  
+I also separated 10% of validation dataset after shuffling data. In fact, the validation accuracy didn't mean much in this model. Because This model prints out the continuous value. not discrete value.
  
  
 ## Visualization
@@ -220,7 +220,12 @@ visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
 </p>
  
 I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
-Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also shows slmilar result with me. After figuring out the reason, I'll rewrite this part.  
+Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also shows slmilar result with me.  
+
+That's because our model is a simple regression model having 1 output. After checking from layer 1 to layer 4, I found out that __any layer does not extract more complex features.__  
+  
+So far, I knew that every front layer has a simple feature and rear layer has a complex feature. It wasn't!!  
+This test brought me great information.
  
  
 ## Driving
@@ -240,7 +245,7 @@ I changed a throttle value based on speed and angle. If current speed is low, I 
   
   
 <p align="center">
-    [<img src="result1.gif" width="425"/>]() [<img src="result2.gif" width="425"/>]() 
+    [<img src="track1_result.gif" width="425"/>](https://youtu.be/kad2xhUBbec) [<img src="track2_result.gif" width="425"/>](https://youtu.be/Eatyx87W5V4) 
 </p>
   
   
@@ -248,7 +253,7 @@ This is my result of Track1 and Track2. You can see the whole video by clicking 
   
   
 <p align="center">
-    [<img src="fantastic.gif" width="425"/>]() [<img src="fantastic_track2_success.png" width="425"/>]() 
+    <img src="fantastic.gif" width="425"/> <img src="fantastic_track2_success.png" width="425"/> 
 </p>
 
 I also succeeded in `fantastic graphic mode` with Udacity  dataset. There are many shadows in Track2 and I randomly added artificial shadow images. If I had `fantastic graphic mode dataset`, the performance would be better.
