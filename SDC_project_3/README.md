@@ -10,7 +10,7 @@
 ## Introduction
  
 >This is Udacity's Self-Driving Car Nanodegree Project.
-Our goal is self-driving by using behavior cloning. It means the process is to **mimic driving behavior** of driver without any detection such as lane marking detection, path planning. In this project, we train our car by using recorded driving images in a simulator provided by Udacity. In the simulator, we record images, steering angle, throttle, speed, etc. The main data is image and steering angle. After training our CNN, the network model predict a steering angle in every frames, so our trained car can drive autonomously. Also, we test the network model with untrained track.  
+Our goal is a **self-driving** by using behavior cloning. It means that the point is **mimicing driver's behavior** without any detection such as lane marking detection, path planning. In this project, we train our car by using recorded driving images in a simulator provided by Udacity. In the simulator, we record images, steering angle, throttle, speed, etc. The main data is image and steering angle. Design our CNN model and after training, the network model predict a steering angle in every frames. So our trained car can drive autonomously. Also, we evaluate the model with untrained track.  
   
   
 Before start this project,  
@@ -69,31 +69,32 @@ In the simulator, we have two modes and two racing tracks.
  
 **`TRAINING MODE`** : Coltrol a car with keyboard or joystick. Collect image datas by clicking a record button.  
  
-**`AUTOMOMOUS MODE`** : Test my trained car.  
+**`AUTONOMOUS MODE`** : Test my trained car.  
  
  
 **Data collection should only be performed in Track1.**  
-We'll check our network model operates well in an untrained track.(Track2)  
+We'll evaluate our network model operates well in an untrained track.(Track2)  
  
-In an autonomous mode, The trained car'll drive by mimicing our control. That means that if we want high-quality results, we need a cautious vehicle-control. So we could use joystick instead of keyboard to get soft angle change.  
+In an autonomous mode, The trained car will drive by mimicing our control. That means that if we want high-quality results, we need a cautious vehicle-control. So we could use joystick instead of keyboard to get soft angle change. (but if you don't have joystick, don't worry. I didn't use it too.)  
 In udacity course, they said **"garbage in, garbage out."**  
  
  
-Also when we record driving, we need data about 'steer back to the middle from the side of the road'. If all of our data is collected with driving in the middle of the road, our car couldn't recover to the middle from the side. But it's really hard to collect many recovery data because our dataset must not have 'weaving out to the side' data. That will exacerbate the accuracy.  
+Also when we record driving, we need data about `steer back to the middle from the side of the road`. If all of our data is collected with driving in the middle of the road, our car couldn't recover to the middle from the side. But it's really hard to collect many recovery data because our dataset __must not have 'weaving out to the side' data__. It seems like teaching a way out of a road. That will deteriorate your performance.
   
-So, that's why we have 3 cameras. We could map recovery paths from each camera. If middle camera image is pointing 'left turn', we could get 'soft left turn' with left camera and 'sharp left turn' with right camera.   
+And we have 3 cameras in a simulator. We could map recovery paths from each camera. If middle camera image is pointing 'left turn', we could get 'soft left turn' with left camera and 'sharp left turn' with right camera. So we could collect much more diverse datas.  
   
   
 I used [udacity dataset](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip) because I didn't have a joystick. I also have my dataset using keyboard but using udacity dataset is easy to compare the result with other students' result.  
   
+  
+![alt text](images/data_distribution.png "data_distribution")  
  
-![alt text](images/data_distribution.png "data_distribution")
- 
-If you finished track1 in training mode, maybe you might feel that there are lots of straight lines in the tracks. Yes, right. And it may cause bad results. In fact, track1 is also biased toward the left turn but not in udacity dataset. So, I needed to balance the data by reducing straight line angles.
+This picture shows the data distribution chart of Udacity dataset.
+If you finished track1 in training mode, maybe you might feel that there are lots of straight lines in the track. Yes, right. And it might cause bad results. In fact, track1 is also biased toward the left turn but not in udacity dataset. So, I needed to balance the data by reducing straight line angles.
  
 ![alt text](images/data_balance.png "data_balance")
  
-I adjusted zero angle data just by randomly reading only about 10% of them. This `data balancing` was the great key to improve performance.
+I adjusted zero angle data just by randomly choosing only about 10% of them. This `data balancing` was the great key to improve performance.
   
  
 ## Data Preprocessing
@@ -101,13 +102,13 @@ I adjusted zero angle data just by randomly reading only about 10% of them. This
  
 ### Generators
  
-Our dataset has limited steering angles on the track. So we need to increase more data for the powerful network model. We could imagine many methods to augment image data such as flipping, shifting, etc. But how we load all the dataset into memory? It might impossible to store all data on the memory.  
+Our dataset has limited steering angles. So we need to increase more data for the powerful network model. We could imagine many methods to augment image data such as flipping, shifting, etc. But how we load all the dataset into memory? It might impossible to store all data on the memory.  
  
-I used `generator` to solve the problem. In Keras, they provide [`fit_generator()`](https://keras.io/models/model/) function and they allow we to do **`real-time data augmentation`** on images in parallel to training our model.  
+I used `generator` to solve the problem. In [Keras](https://keras.io/), they provide [`fit_generator()`](https://keras.io/models/model/) function and they allow we to do **`real-time data augmentation`** on images in parallel to training our model.  
  
 ### Data Augmentation
  
-For the data augmentation, I added `Left, Right images` and used `flipping`, `shifting`, `changing brightness`, `generating shadow` methods.
+For the data augmentation, I added `Left, Right images` and used `flipping`, `shifting`, `changing brightness`, `generating shadow` methods.  
   
   
 > **Including Left, Right images**
@@ -146,7 +147,8 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
   - This method is used for fantastic graphic mode. Udacity data is collected in fastest graphic mode. In fantastic graphic mode, there are many shadows. So I generated artificial shadow.  
   
   
-### Crop Image
+  
+### Crop Image  
   
   
 <p align="center">
@@ -156,7 +158,7 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
   
 In image, a bonnet and background are not necessary to decide a exact steering angle. Therefore, I cropped the inconsequential parts.
  
-### Resizing
+### Resizing  
   
   
 <p align="center">
