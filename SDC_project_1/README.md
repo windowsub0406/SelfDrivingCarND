@@ -1,6 +1,6 @@
 #**Finding Lane Lines on the Road** 
 
-<img src="result_solidYellowCurve.jpg" width="480" alt="Combined Image" />
+<img src="test_images/result_solidYellowCurve.jpg" width="480" alt="Combined Image" />
 
 ####My first project of the Udacity's 'Self Driving Car Nanodegree' was `Finding lane lines`.
 ####In this project, I mainly considered **'How to erase outliers'**.
