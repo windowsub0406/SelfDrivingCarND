@@ -7,8 +7,8 @@
 </p>
   
  
-## Introduction
- 
+## Introduction  
+  
 >This is Udacity's Self-Driving Car Nanodegree Project.
 Our goal is a **self-driving** by using behavior cloning. It means that the point is **mimicing driver's behavior** without any detection such as lane marking detection, path planning. In this project, we train our car by using recorded driving images in a simulator provided by Udacity. In the simulator, we record images, steering angle, throttle, speed, etc. The main data is image and steering angle. Design our CNN model and after training, the network model predict a steering angle in every frames. So our trained car can drive autonomously. Also, we evaluate the model with untrained track.  
   
@@ -22,7 +22,7 @@ would be good guide to understand the exact concept.
  
  
  
-## Installation & Environment
+## Installation & Environment  
  
 ### Installation
  
@@ -38,7 +38,7 @@ would be good guide to understand the exact concept.
     [data](https://d17h27t6h515a5.cloudfront.net/topher/2016/December/584f6edd_data/data.zip) (Track1 data provided by Udacity)
  
  
-### Environment
+### Environment  
   
 #### software  
   
@@ -59,8 +59,8 @@ would be good guide to understand the exact concept.
 To test self-driving(autonomous mode), type `python drive.py model.json` on terminal.  
  
  
-## Data Collection
- 
+## Data Collection  
+  
 <p align="center">
     <img src="images/simulator.png" width="480" alt="simulator" />
 </p>
@@ -97,17 +97,17 @@ If you finished track1 in training mode, maybe you might feel that there are lot
 I adjusted zero angle data just by randomly choosing only about 10% of them. This `data balancing` was the great key to improve performance.
   
  
-## Data Preprocessing
+## Data Preprocessing  
  
  
-### Generators
- 
+### Generators  
+  
 Our dataset has limited steering angles. So we need to increase more data for the powerful network model. We could imagine many methods to augment image data such as flipping, shifting, etc. But how we load all the dataset into memory? It might impossible to store all data on the memory.  
  
 I used `generator` to solve the problem. In [Keras](https://keras.io/), they provide [`fit_generator()`](https://keras.io/models/model/) function and they allow we to do **`real-time data augmentation`** on images in parallel to training our model.  
  
-### Data Augmentation
- 
+### Data Augmentation  
+  
 For the data augmentation, I added `Left, Right images` and used `flipping`, `shifting`, `changing brightness`, `generating shadow` methods.  
   
   
@@ -148,7 +148,7 @@ After more than 100 tests,(seriously..) I decided to take the `offset value = 0.
   
   
   
-### Crop Image  
+### Crop Image   
   
   
 <p align="center">
@@ -164,13 +164,13 @@ In image, a bonnet and background are not necessary to decide a exact steering a
 <p align="center">
     <img src="images/64x64.png" width="640" alt="64x64" />
 </p>
- 
+  
 After data augmentation & crop, I resized image to 64x64. I tried 200x66 and 64x32 size but 64x64 size was best in my model and parameter setting. I also tested 128x128 size for better layer feature map resolution, the result was similar with 64x64.  
-In NVIDIA paper, they converted RGB to YUV color space but I used a RGB image.
- 
- 
-## Network Architecture
- 
+In NVIDIA paper, they converted RGB to YUV color space but I used a RGB image.  
+  
+  
+## Network Architecture  
+  
 In this network model, the biggest difference with prior [traffic-sign project](https://github.com/windowsub0406/SelfDrivingCarND/blob/master/SDC_project_2/Traffic_Sign_Classifier.ipynb) is output. We had traffic sign labels and had classified images. But now we should estimate the continuous value(steering angle) based on dataset. It's **`regression`**. not classification.  
  
 I tested NVIDIA and Comma.ai network architecture but I decided to design my model by modifying them.  
@@ -200,11 +200,11 @@ And added 4 Convolutional layers. The filter size is almost 3x3 and 1 2x2. I gue
 As I designed the model in prior [traffic-sign project](https://github.com/windowsub0406/SelfDrivingCarND/blob/master/SDC_project_2/Traffic_Sign_Classifier.ipynb), I had tried he's initialization and batch_normalization for preventing the overfitting and 'vanishing gradient'. I couldn't find the correct reason but it turned out to be rather unsatisfactory. So I added a droupout and it worked well.
  
 I used an `Adam optimizer` for training and `learning rate = 0.0001`, `batch size : 256`, `10 epoch`.  
-I also separated 10% of validation dataset after shuffling data. In fact, the validation accuracy didn't mean much in this model. Because This model prints out the continuous value. not discrete value.
+I also separated 10% of validation dataset after shuffling data. In fact, the validation accuracy didn't mean much in this model. Because This model prints out the continuous value. not discrete value.  
  
  
-## Visualization
- 
+## Visualization  
+  
 Actually before starting this project, I really wanted to check `layer feature maps`. Luckily, I could easily check it through Keras.   
  
 ```python
@@ -220,17 +220,17 @@ visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
     <img src="images/visualization2.png" alt="visualization" />
 </p>
  
-I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
+I visualized convolutional layer 1 and layer 2. I expected that 'the first and second layer have just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object.' [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
 Convolutional Networks) shows that. But in my model it doesn't look like that. NVIDIA paper also shows slmilar result with me.  
 
 That's because our model is a simple regression model having 1 output. After checking from layer 1 to layer 4, I found out that __any layer does not extract more complex features.__  
   
-So far, I misunderstood that every front layer has a simple feature and rear layer has a complex feature. But it wasn't!!  
-This test brought me great information.
- 
- 
-## Driving
- 
+So far, I completely misunderstood the CNN structure as 'every CNN models have simple feature in first layer and getting more complex as layer goes by.' **`But it was wrong!!`**  
+This test brought me great information.  
+  
+  
+## Driving  
+  
 ```python
 boost = 1 - speed / max_speed +0.3
 throttle = boost if (boost < 1) else 1
