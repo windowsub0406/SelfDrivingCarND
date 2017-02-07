@@ -245,32 +245,25 @@ I changed a throttle value based on speed and angle. If current speed is low, I 
 ## Result
   
   
->Track1
+>Track1 (Click for full HD video)
   
 [![Video White](images/track1_part.gif?raw=true)](https://youtu.be/kad2xhUBbec)  
   
   
->Track2
+  
+>Track2 (Click for full HD video)
   
 [![Video White](images/track2_part.gif?raw=true)](https://youtu.be/Eatyx87W5V4)
 
-  
-  
-# test
-
-<p align="center">
-    [<img src="images/track2_part.gif" width="425"/>](https://youtu.be/Eatyx87W5V4) <img src="images/fantastic_track2_success.png" width="425"/> 
-</p>
-  
-  
   
 This is my result of Track1 and Track2. You can see the whole video by clicking the gif image. **My trained car moves smoothly in most cases.** You can also check the layer1, layer2's feature map. 
   
   
 <p align="center">
-    <img src="images/fantastic.gif" width="425"/> <img src="images/fantastic_track2_success.png" width="425"/> 
+    <img src="images/fantastic.gif" height="240"/> <img src="images/fantastic_track2_success.png" height="240"/> 
 </p>
-
+  
+  
 I also succeeded in `fantastic graphic mode` with Udacity  dataset. There are many shadows in Track2 and I randomly added artificial shadow images. If I had `fantastic graphic mode dataset`, the performance would be better.
 
 
