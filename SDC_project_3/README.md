@@ -217,7 +217,7 @@ visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
 ```
  
 <p align="center">
-    <img src="images/visualization.png" width="640" alt="visualization" />
+    <img src="images/visualization2.png" alt="visualization" />
 </p>
  
 I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
@@ -247,20 +247,28 @@ I changed a throttle value based on speed and angle. If current speed is low, I 
   
 >Track1
   
-[![Video White](track1_result.gif?raw=true)](https://youtu.be/kad2xhUBbec)  
+[![Video White](images/track1_part.gif?raw=true)](https://youtu.be/kad2xhUBbec)  
   
   
 >Track2
   
-[![Video White](track2_result.gif?raw=true)](https://youtu.be/Eatyx87W5V4)
+[![Video White](images/track2_part.gif?raw=true)](https://youtu.be/Eatyx87W5V4)
 
+  
+  
+# test
+
+<p align="center">
+    [<img src="images/track2_part.gif" width="425"/>](https://youtu.be/Eatyx87W5V4) <img src="images/fantastic_track2_success.png" width="425"/> 
+</p>
+  
   
   
 This is my result of Track1 and Track2. You can see the whole video by clicking the gif image. **My trained car moves smoothly in most cases.** You can also check the layer1, layer2's feature map. 
   
   
 <p align="center">
-    <img src="fantastic.gif" width="425"/> <img src="fantastic_track2_success.png" width="425"/> 
+    <img src="images/fantastic.gif" width="425"/> <img src="images/fantastic_track2_success.png" width="425"/> 
 </p>
 
 I also succeeded in `fantastic graphic mode` with Udacity  dataset. There are many shadows in Track2 and I randomly added artificial shadow images. If I had `fantastic graphic mode dataset`, the performance would be better.
