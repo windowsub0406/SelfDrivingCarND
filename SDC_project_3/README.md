@@ -165,7 +165,8 @@ In image, a bonnet and background are not necessary to decide a exact steering a
     <img src="images/64x64.png" width="640" alt="64x64" />
 </p>
  
-After data augmentation & crop, I resized image to 64x64. I tried 200x66 and 64x32 size but 64x64 size was best in my model and parameter setting.
+After data augmentation & crop, I resized image to 64x64. I tried 200x66 and 64x32 size but 64x64 size was best in my model and parameter setting. I also tested 128x128 size for better layer feature map resolution, the result was similar with 64x64.  
+In NVIDIA paper, they converted RGB to YUV color space but I used a RGB image.
  
  
 ## Network Architecture
@@ -220,11 +221,11 @@ visual_layer1, visual_layer2 = layer1.predict(img), layer2.predict(img)
 </p>
  
 I visualized convolutional layer 1 and layer 2. I expected the first and second layer has just simple features(e.g. line, edge, curve) and the rear layer has more complex features like texture or entire object. [This paper](http://www.matthewzeiler.com/pubs/arxive2013/eccv2014.pdf)(Visualizing and Understanding
-Convolutional Networks) shows that. But in my model it wasn't. NVIDIA paper also shows slmilar result with me.  
+Convolutional Networks) shows that. But in my model it doesn't look like that. NVIDIA paper also shows slmilar result with me.  
 
 That's because our model is a simple regression model having 1 output. After checking from layer 1 to layer 4, I found out that __any layer does not extract more complex features.__  
   
-So far, I knew that every front layer has a simple feature and rear layer has a complex feature. It wasn't!!  
+So far, I misunderstood that every front layer has a simple feature and rear layer has a complex feature. But it wasn't!!  
 This test brought me great information.
  
  
@@ -244,9 +245,15 @@ I changed a throttle value based on speed and angle. If current speed is low, I 
 ## Result
   
   
-<p align="center">
-    [<img src="track1_result.gif" width="425"/>](https://youtu.be/kad2xhUBbec) [<img src="track2_result.gif" width="425"/>](https://youtu.be/Eatyx87W5V4) 
-</p>
+>Track1
+  
+[![Video White](track1_result.gif?raw=true)](https://youtu.be/kad2xhUBbec)  
+  
+  
+>Track2
+  
+[![Video White](track2_result.gif?raw=true)](https://youtu.be/Eatyx87W5V4)
+
   
   
 This is my result of Track1 and Track2. You can see the whole video by clicking the gif image. **My trained car moves smoothly in most cases.** You can also check the layer1, layer2's feature map. 
@@ -267,4 +274,4 @@ I recorded the video separately and combined because of my laptop's computing po
 ## Reflection
  
 Really impressive project. I have looked forward to start this project since I check the curriculum of Udacity's SDC ND. I'm particularly grateful to Udacity for giving me the great opportunity with amazing students.
-From collecting data to design a network architecture, every parts were important. During completing this project, I could got used to Keras and python generator. Above all, I extremely realized the importance of data quality. If I have a chance, I want to test it with real vehicle.
+From collecting data to design a network architecture, every parts were important. During completing this project, I could got used to Keras and python generator. I tried many data augmentation methods and visualized each layer's feature map. I could improve my Deep Learning knowledge. Above all, I extremely realized the importance of data quality. If I have a chance, I want to test it with real vehicle.
