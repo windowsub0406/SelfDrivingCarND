@@ -256,15 +256,17 @@ I changed a throttle value based on speed and angle. If current speed is low, I 
 [![Video White](images/track2_part.gif?raw=true)](https://youtu.be/Eatyx87W5V4)
 
   
-This is my result of Track1 and Track2. You can see the whole video by clicking the gif image. **My trained car moves smoothly in most cases.** You can also check the layer1, layer2's feature map. 
+This is my result of Track1 and Track2. You can see the whole video by clicking the gif image.  
+**`My trained car moves smoothly in most cases.`** You can also check the layer1, layer2's feature map.  
   
   
 <p align="center">
-    <img src="images/fantastic.gif" height="240"/> <img src="images/fantastic_track2_success.png" height="240"/> 
+    <img src="images/fantastic.gif" height="200"/> <img src="images/fantastic_track2_success.png" height="200"/><br>
+    fantastic mode success with udacity dataset<br>
 </p>
   
   
-I also succeeded in `fantastic graphic mode` with Udacity  dataset. There are many shadows in Track2 and I randomly added artificial shadow images. If I had `fantastic graphic mode dataset`, the performance would be better.
+I also succeeded in `fantastic graphic mode` with Udacity  dataset. There are many shadows in Track2 fantastic mode. So when I augment images, I randomly added artificial shadow. If I had fantastic graphic mode dataset, the performance would be better.
 
 
 I recorded the video separately and combined because of my laptop's computing power.  
